@@ -7,7 +7,7 @@ import {
   deleteUser,
   getStats 
 } from '../controller/userController.js';
-import { protect, authorize } from '../middlewares/authMiddleware.js';
+import { protect, authorize } from '../middlewares/authmiddleware.js';
 
 const router = express.Router();
 
