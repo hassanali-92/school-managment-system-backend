@@ -1,0 +1,69 @@
+# ==========================================
+# 📦 DEPENDENCIES
+# ==========================================
+node_modules/
+.pnp
+.pnp.js
+
+# ==========================================
+# 🔐 ENVIRONMENT VARIABLES (CRITICAL)
+# ==========================================
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+
+# ==========================================
+# 📜 LOGS
+# ==========================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+logs/
+
+# ==========================================
+# 💻 OS & SYSTEM FILES
+# ==========================================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ==========================================
+# 🛠️ IDE & EDITOR FILES
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ==========================================
+# 📊 TESTING & COVERAGE
+# ==========================================
+coverage/
+.nyc_output/
+
+# ==========================================
+# 📁 TEMP & UPLOADS
+# ==========================================
+uploads/
+tmp/
+temp/
+cache/
+
+# ==========================================
+# 📦 OPTIONAL (Keep if you want reproducible installs)
+# ==========================================
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
