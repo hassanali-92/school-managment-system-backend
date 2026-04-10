@@ -13,39 +13,52 @@ connectDB();
 
 const app = express();
 
-// Render ke liye PORT setting (Render automatically port assign karta hai)
+// Render automatically assigns a port
 const PORT = process.env.PORT || 10000; 
 
 // ==================== MIDDLEWARE ====================
 
-// CORS Configuration
+// FIXED CORS: Added multiple possible Vercel URLs and removed trailing slashes
+const allowedOrigins = [
+  'https://school-management-system-frontend-drab.vercel.app',
+  'https://school-management-system-frontend-wvkovtltp.vercel.app', // Jo error mein aa raha tha
+  'http://localhost:5173'
+];
+
 app.use(cors({
-  origin: [
-    'https://school-management-system-frontend-drab.vercel.app/', // Naya URL yahan dalein
-    'http://localhost:5173'
-  ],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1 || origin.includes('vercel.app')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
 // JSON Body Parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ==================== ROUTES ====================
 
+// IMPORTANT: Frontend mein VITE_API_URL ke aakhir mein /api lazmi lagana
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 
-// Root Route (Testing ke liye ke backend live hai ya nahi)
+// Root Route
 app.get('/', (req, res) => {
-  res.send('API is running...');
+  res.send('School Management System API is running...');
 });
 
 app.get('/api/health', (req, res) => {
   res.status(200).json({ 
     status: 'OK', 
-    message: 'School Management System API is running',
+    message: 'API is healthy',
     timestamp: new Date().toISOString()
   });
 });
@@ -60,13 +73,12 @@ app.use((err, req, res, next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   res.status(statusCode).json({
     message: err.message,
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
+    stack: process.env.NODE_ENV === 'production' ? null : err.stack,
   });
 });
 
 // ==================== SERVER START ====================
 
-// '0.0.0.0' add karna Render ke liye zaroori hota hai
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
