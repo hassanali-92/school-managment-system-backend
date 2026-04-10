@@ -20,16 +20,14 @@ const PORT = process.env.PORT || 10000;
 
 // CORS Configuration
 app.use(cors({
-  // Yahan Array use karein taake Local aur Vercel dono chalein
   origin: [
-    'https://school-management-system-frontend-one.vercel.app', 
+    'https://school-management-system-frontend-drab.vercel.app/', // Naya URL yahan dalein
     'http://localhost:5173'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
-
 // JSON Body Parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
